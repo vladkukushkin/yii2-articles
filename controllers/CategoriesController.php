@@ -15,6 +15,7 @@ namespace vladkukushkin\articles\controllers;
 use Yii;
 use vladkukushkin\articles\models\Categories;
 use vladkukushkin\articles\models\CategoriesSearch;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -30,6 +31,22 @@ class CategoriesController extends Controller
     public function behaviors()
     {
         return [
+            [
+                'class' => 'yii\filters\HttpCache',
+                'only' => ['view'],
+                'etagSeed' => function ($action, $params) {
+                    $id = Yii::$app->request->get('id', 0);
+                    $q = new Query();
+                    $item = $q->from(Categories::tableName())
+                        ->where([
+                            'id' => $id
+                        ])
+                        ->one();
+                    return $item
+                        ? serialize([$item['name'], $item['description']])
+                        : serialize(['empty', 'empty']);
+                },
+            ],
 			'access' => [
 				'class' => AccessControl::className(),
 				'rules' => [
