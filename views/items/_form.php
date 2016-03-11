@@ -4,7 +4,7 @@
 * @copyright Copyright &copy; Gogodigital Srls
 * @company Gogodigital Srls - Wide ICT Solutions 
 * @website http://www.gogodigital.it
-* @github https://github.com/cinghie/yii2-articles
+* @github https://github.com/vladkukushkin/yii2-articles
 * @license GNU GENERAL PUBLIC LICENSE VERSION 3
 * @package yii2-articles
 * @version 0.6.2
@@ -12,7 +12,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use cinghie\articles\assets\ArticlesAsset;
+use vladkukushkin\articles\assets\ArticlesAsset;
 
 // Load Kartik Libraries
 use kartik\widgets\ActiveForm;
@@ -20,14 +20,10 @@ use kartik\widgets\DateTimePicker;
 use kartik\widgets\FileInput;
 use kartik\widgets\Select2;
 
-// Load Editors Libraries
-use dosamigos\ckeditor\CKEditor;
-use dosamigos\tinymce\TinyMce;
-use kartik\markdown\MarkdownEditor;
 
 // Load Articles Assets
 ArticlesAsset::register($this);
-$asset = $this->assetBundles['cinghie\articles\assets\ArticlesAsset'];
+$asset = $this->assetBundles['vladkukushkin\articles\assets\ArticlesAsset'];
 
 // Get current user
 $user     = Yii::$app->user->identity;
@@ -305,17 +301,19 @@ $select2videotype = $model->getVideoTypeSelect2();
                         <div class="col-lg-6">
                         
                             <?php if ($editor=="imperavi"): ?>
-                            	<?= $form->field($model, 'introtext')->widget(yii\imperavi\Widget::className(), [
-									'options' => [
-										'css' => 'wym.css',
+                            	<?= $form->field($model, 'introtext')->widget(\vova07\imperavi\Widget::className(), [
+									'settings' => [
 										'minHeight' => 250,
+										'paragraphize' => false,
+										'cleanOnPaste' => false,
+										'replaceDivs' => false,
+										'linebreaks' => false,
+										'plugins' => [
+											'fullscreen',
+											'imagemanager',
+										],
 										'imageUpload' => Url::to(['/articles/items/image-upload']),
 										'imageManagerJson' => Url::to(['/articles/items/images-get']),
-									],
-									'plugins' => [
-										'fullscreen',
-										'clips',
-										'imagemanager',
 									]
 								]); ?>
                             <?php else: ?>
@@ -327,17 +325,19 @@ $select2videotype = $model->getVideoTypeSelect2();
                         <div class="col-lg-6">
                         
                             <?php if ($editor=="imperavi"): ?>
-                            	<?= $form->field($model, 'fulltext')->widget(yii\imperavi\Widget::className(), [
-									'options' => [
-										'css' => 'wym.css',
+                            	<?= $form->field($model, 'fulltext')->widget(\vova07\imperavi\Widget::className(), [
+									'settings' => [
 										'minHeight' => 250,
+										'paragraphize' => false,
+										'cleanOnPaste' => false,
+										'replaceDivs' => false,
+										'linebreaks' => false,
+										'plugins' => [
+											'fullscreen',
+											'imagemanager',
+										],
 										'imageUpload' => Url::to(['/articles/items/image-upload']),
 										'imageManagerJson' => Url::to(['/articles/items/images-get']),
-									],
-									'plugins' => [
-										'fullscreen',
-										'clips',
-										'imagemanager',
 									]
 								]); ?>
                             <?php else: ?>

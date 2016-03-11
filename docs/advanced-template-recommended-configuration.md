@@ -22,7 +22,7 @@ Recommended Configuration for Advanced Template
 
         // Yii2 Articles
         'articles' => [
-            'class' => 'cinghie\articles\Articles',
+            'class' => 'vladkukushkin\articles\Articles',
             'userClass' => 'dektrium\user\models\User',
 
 			// Select Languages allowed
@@ -31,8 +31,8 @@ Recommended Configuration for Advanced Template
 				"en-GB" => "en-GB" 
 			],          
 
-			// Select Editor: no-editor, ckeditor, imperavi, tinymce, markdown
-			'editor' => 'ckeditor',
+			// Select Editor: no-editor, imperavi
+			'editor' => 'imperavi',
 
 			// Select Image Name: categoryname, original, casual
 			'imageNameType' => 'categoryname',
@@ -52,11 +52,6 @@ Recommended Configuration for Advanced Template
 		// Module Kartik-v Grid
         'gridview' =>  [
             'class' => '\kartik\grid\Module',
-        ],
-
-        // Module Kartik-v Markdown Editor
-        'markdown' => [
-            'class' => 'kartik\markdown\Module',
         ],
 
 ]	
