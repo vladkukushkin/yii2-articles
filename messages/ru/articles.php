@@ -68,7 +68,7 @@ return array(
 	'Description'=>'Описание',
 	'Parent'=>'Родитель',
 	'No Parent'=>'Без родителя',
-	'State'=>'Состоняие',
+	'State'=>'Состояние',
 	'Active'=>'Активно',
 	'Inactive'=>'Не активно',
 	'Unpublished'=>'Не опубликованно',

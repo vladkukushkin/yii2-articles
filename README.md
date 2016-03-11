@@ -22,13 +22,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-$ php composer.phar require cinghie/yii2-articles "*"
+$ php composer.phar require vladkukushkin/yii2-articles "*"
 ```
 
 or add
 
 ```
-"cinghie/yii2-articles": "*"
+"vladkukushkin/yii2-articles": "*"
 ```
 
 Configuration
@@ -43,29 +43,34 @@ Copy img folder to your webroot
 Make sure that you have properly configured `db` application component
 and run the following command:
 ```
-$ php yii migrate/up --migrationPath=@vendor/cinghie/yii2-articles/migrations
+$ php yii migrate/up --migrationPath=@vendor/vladkukushkin/yii2-articles/migrations
 ```
 
 ### 3. Set configuration file
 
-Set on your configuration file, in modules section
+Set on your configuration file, in modules section.
+'categoryImagePath' and 'categoryImageURL' must be set on the same folder.
+'itemImagePath' and 'itemImageURL' must be set on the same folder.
+In this case you`ll be able to save images inside your text.
+This is requirement of vova07/imperavi-widget.
 
 ```
 'modules' => [ 
 
 	// Module Articles
 	'articles' => [
-		'class' => 'cinghie\articles\Articles',
+		'class' => 'vladkukushkin\articles\Articles',
 		'userClass' => 'dektrium\user\models\User',
 		
 		// Select Languages allowed
 		'languages' => [ 
 			"it-IT" => "it-IT", 
-			"en-GB" => "en-GB" 
+			"en-GB" => "en-GB", 
+			"ru-RU" => "ru-Ru" 
 		],			
 		
-		// Select Editor: no-editor, ckeditor, imperavi, tinymce, markdown
-		'editor' => 'ckeditor',
+		// Select Editor: no-editor, imperavi
+		'editor' => 'imperavi',
 		
 		// Select Path To Upload Category Image
         'categoryImagePath' => '@webroot/img/articles/categories/',
@@ -296,8 +301,5 @@ The migrations add to the database 4 types of users:
   <li>Yii2 Grid: https://github.com/kartik-v/yii2-grid</li>
   <li>Yii2 Widget: https://github.com/kartik-v/yii2-widgets</li>
   <li>Yii2 mPDF: https://github.com/kartik-v/yii2-mpdf</li>
-  <li>Yii2 MarkDown: https://github.com/kartik-v/yii2-markdown</li>
-  <li>Yii2 CKEditor: https://github.com/2amigos/yii2-ckeditor-widget</li>
-  <li>Yii2 TinyMCE: https://github.com/2amigos/yii2-tinymce-widget</li>
-  <li>Yii2 Imperavi Redactor: https://github.com/asofter/yii2-imperavi-redactor</li>
+  <li>Yii2 Imperavi Redactor: https://github.com/vova07/yii2-imperavi-widget</li>
 </ul> 

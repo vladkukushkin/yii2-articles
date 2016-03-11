@@ -35,7 +35,8 @@ class CategoriesController extends Controller
 				'rules' => [
 					[
                         'allow' => true,
-                        'actions' => ['index','create','update','delete','deleteimage','deletemultiple','changestate','activemultiple','deactivemultiple'],
+                        'actions' => ['index','create','update','delete','deleteimage','deletemultiple','changestate',
+                            'activemultiple','deactivemultiple', 'image-upload', 'images-get'],
                         'roles' => ['@']
                     ],
 					[
@@ -56,6 +57,29 @@ class CategoriesController extends Controller
 					'deleteImage' => ['post'],
                     'deletemultiple' => ['post'],
                 ],
+            ],
+        ];
+    }
+
+    public function actions()
+    {
+        parent::actions();
+        /*
+         * http://www.yiiframework.ru/forum/viewtopic.php?f=9&t=22866#p141025
+         * логика такова: загрузил изображение по пути указанному в path, а в редакторе, в src изображения прописал url
+         * behaviour - download image by path defined in path variable and in redactor define src for image from url variable
+         */
+        return [
+            'image-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadAction',
+                'url' => Yii::getAlias(Yii::$app->controller->module->categoryImageURL), // Directory URL address, where files are stored.
+                'path' => Yii::getAlias(Yii::$app->controller->module->categoryImagePath), // Or absolute path to directory where files are stored.
+            ],
+            'images-get' => [
+                'class' => 'vova07\imperavi\actions\GetAction',
+                'url' => Yii::getAlias(Yii::$app->controller->module->categoryImageURL), // Directory URL address, where files are stored.
+                'path' => Yii::getAlias(Yii::$app->controller->module->categoryImagePath), // Or absolute path to directory where files are stored.
+                'type' => \vova07\imperavi\actions\GetAction::TYPE_IMAGES,
             ],
         ];
     }

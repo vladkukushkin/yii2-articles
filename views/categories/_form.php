@@ -12,6 +12,7 @@
 
 use yii\helpers\Html;
 use cinghie\articles\assets\ArticlesAsset;
+use yii\helpers\Url;
 
 // Load Kartik Libraries
 use kartik\widgets\ActiveForm;
@@ -98,38 +99,18 @@ $roles     = $model->getRoles();
 									]
 								])->textInput(['maxlength' => 255]) ?>
                                 
-                            <?php if ($editor=="ckeditor"): ?>
-                            	<?= $form->field($model, 'description')->widget(CKEditor::className(), 
-									[
-										'options'  => ['rows' => 12],
-										'preset'   => 'advanced'
-								]); ?>
-                            <?php elseif ($editor=="tinymce"): ?>
-                            	<?= $form->field($model, 'description')->widget(TinyMce::className(), [
-										'clientOptions' => [
-											'plugins' => [
-												"advlist autolink lists link charmap print preview anchor",
-												"searchreplace visualblocks code fullscreen",
-												"insertdatetime media table contextmenu paste"
-											],			
-											'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-										],
-										'options' => ['rows' => 12]
-								]); ?>
-                            <?php elseif ($editor=="markdown"): ?>
-                            	<?= $form->field($model, 'description')->widget(
-										MarkdownEditor::classname(),
-										['height' => 250, 'encodeLabels' => true]
-								); ?>
-                            <?php elseif ($editor=="imperavi"): ?>
+                            <?php if ($editor=="imperavi"): ?>
                             	<?= $form->field($model, 'description')->widget(yii\imperavi\Widget::className(), [
 									'options' => [
 										'css'  => 'wym.css',
+										'imageUpload' => Url::to(['/articles/categories/image-upload']),
+										'imageManagerJson' => Url::to(['/articles/categories/images-get']),
 									],
 									'plugins' => [
 										'fullscreen',
-										'clips'
-									]
+										'clips',
+										'imagemanager',
+									],
 								]); ?>
                             <?php else: ?>
                             	<?= $form->field($model, 'description')->textarea(['rows' => 12]); ?>

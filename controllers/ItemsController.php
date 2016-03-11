@@ -35,7 +35,8 @@ class ItemsController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','create','update','delete','deleteimage','deletemultiple','changestate','activemultiple','deactivemultiple'],
+                        'actions' => ['index','create','update','delete','deleteimage','deletemultiple','changestate',
+                            'activemultiple','deactivemultiple', 'image-upload', 'images-get'],
                         'roles' => ['@']
                     ],
                     [
@@ -56,6 +57,33 @@ class ItemsController extends Controller
 					'deleteImage' => ['post'],
                     'deletemultiple' => ['post'],
                 ],
+            ],
+        ];
+    }
+
+    public function actions()
+    {
+        parent::actions();
+        /*
+         * http://www.yiiframework.ru/forum/viewtopic.php?f=9&t=22866#p141025
+         * логика такова: загрузил изображение по пути указанному в path, а в редакторе, в src изображения прописал url
+         * behaviour - download image by path defined in path variable and in redactor define src for image from url variable
+         */
+        return [
+            'image-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadAction',
+//                'url' => 'http://npr/img/articles/categories/', // Directory URL address, where files are stored.
+//                'path' => '@frontend/web/img/articles/categories/', // Or absolute path to directory where files are stored.
+                'url' => Yii::getAlias(Yii::$app->controller->module->itemImageURL), // Directory URL address, where files are stored.
+                'path' => Yii::getAlias(Yii::$app->controller->module->itemImagePath), // Or absolute path to directory where files are stored.
+            ],
+            'images-get' => [
+                'class' => 'vova07\imperavi\actions\GetAction',
+//                'url' => 'http://npr/img/articles/categories/', // Directory URL address, where files are stored.
+//                'path' => '@frontend/web/img/articles/categories/', // Or absolute path to directory where files are stored.
+                'url' => Yii::getAlias(Yii::$app->controller->module->itemImageURL), // Directory URL address, where files are stored.
+                'path' => Yii::getAlias(Yii::$app->controller->module->itemImagePath), // Or absolute path to directory where files are stored.
+                'type' => \vova07\imperavi\actions\GetAction::TYPE_IMAGES,
             ],
         ];
     }
@@ -120,7 +148,7 @@ class ItemsController extends Controller
             if ( $model->load(Yii::$app->request->post()) )
             {
                 // Set Modified as actual date
-                $model->modified = "1970-01-01 00:00:01";
+                $model->modified = "0000-00-00 00:00:00";
 
                 // If alias is not set, generate it
                 if ($_POST['Items']['alias']=="")
